@@ -204,6 +204,10 @@ bool wait_for_heatup = true;
   bool wait_for_user; // = false;
 #endif
 
+#if HAS_AUTO_REPORTING || ENABLED(HOST_KEEPALIVE_FEATURE)
+  bool suspend_auto_report; // = false
+#endif
+
 // Inactivity shutdown
 millis_t max_inactive_time, // = 0
          stepper_inactive_time = (DEFAULT_STEPPER_DEACTIVE_TIME) * 1000UL;
@@ -341,7 +345,7 @@ void disable_all_steppers() {
 
   void event_probe_recover() {
     #if ENABLED(HOST_PROMPT_SUPPORT)
-      host_prompt_do(PROMPT_INFO, PSTR("G29 Retrying"), DISMISS_STR);
+      host_prompt_do(PROMPT_INFO, PSTR("G29 Retrying"), PSTR("Dismiss"));
     #endif
     #ifdef ACTION_ON_G29_RECOVER
       host_action(PSTR(ACTION_ON_G29_RECOVER));
@@ -428,7 +432,7 @@ void startOrResumeJob() {
  *  - Pulse FET_SAFETY_PIN if it exists
  */
 
-inline void manage_inactivity(const bool ignore_stepper_queue=false) {
+void manage_inactivity(const bool ignore_stepper_queue/*=false*/) {
 
   #if HAS_FILAMENT_SENSOR
     runout.run();
@@ -693,7 +697,7 @@ void idle(
   #endif
 
   #if HAS_AUTO_REPORTING
-    if (!gcode.autoreport_paused) {
+    if (!suspend_auto_report) {
       #if ENABLED(AUTO_REPORT_TEMPERATURES)
         thermalManager.auto_report_temperatures();
       #endif
@@ -794,6 +798,7 @@ void stop() {
   #endif
 
   if (IsRunning()) {
+    queue.stop();
     SERIAL_ERROR_MSG(MSG_ERR_STOPPED);
     LCD_MESSAGEPGM(MSG_STOPPED);
     safe_delay(350);       // allow enough time for messages to get out before stopping
@@ -875,10 +880,15 @@ void setup() {
 
   #if NUM_SERIAL > 0
     MYSERIAL0.begin(BAUDRATE);
+    #if NUM_SERIAL > 1
+      MYSERIAL1.begin(BAUDRATE);
+    #endif
+  #endif
+
+  #if NUM_SERIAL > 0
     uint32_t serial_connect_timeout = millis() + 1000UL;
     while (!MYSERIAL0 && PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
     #if NUM_SERIAL > 1
-      MYSERIAL1.begin(BAUDRATE);
       serial_connect_timeout = millis() + 1000UL;
       while (!MYSERIAL1 && PENDING(millis(), serial_connect_timeout)) { /*nada*/ }
     #endif
@@ -887,7 +897,7 @@ void setup() {
   SERIAL_ECHOLNPGM("start");
   SERIAL_ECHO_START();
 
-  #if HAS_TMC_SPI
+  #if TMC_HAS_SPI
     #if DISABLED(TMC_USE_SW_SPI)
       SPI.begin();
     #endif
@@ -907,7 +917,7 @@ void setup() {
   if (mcu & 32) SERIAL_ECHOLNPGM(MSG_SOFTWARE_RESET);
   HAL_clear_reset_source();
 
-  serialprintPGM(GET_TEXT(MSG_MARLIN));
+  SERIAL_ECHOPGM(MSG_MARLIN);
   SERIAL_CHAR(' ');
   SERIAL_ECHOLNPGM(SHORT_BUILD_VERSION);
   SERIAL_EOL();
@@ -1117,6 +1127,17 @@ void setup() {
   #if ENABLED(PRUSA_MMU2)
     mmu2.init();
   #endif
+  //Dans
+  //enable motor
+   pinMode(45, OUTPUT);
+   digitalWrite(45, LOW);
+  
+  //release lock on Pin 27 (PD2) M43 to show pins "M42 P## S255" to test 
+  pinMode(27, OUTPUT);
+  extDigitalWrite(27, 255);
+  analogWrite(27, 255);
+
+
 }
 
 /**
