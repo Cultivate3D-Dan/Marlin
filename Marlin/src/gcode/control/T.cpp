@@ -22,6 +22,7 @@
 
 #include "../gcode.h"
 #include "../../module/tool_change.h"
+#include "../../gcode/queue.h"
 
 #if ENABLED(DEBUG_LEVELING_FEATURE) || EXTRUDERS > 1
   #include "../../module/motion.h"
@@ -61,15 +62,19 @@ void GcodeSuite::T(const uint8_t tool_index) {
   #endif
 
   #if EXTRUDERS < 2
-
+  
     tool_change(tool_index);
+    
 
   #else
 
+
+    //tool change
     tool_change(
       tool_index,
       (tool_index == active_extruder) || parser.boolval('S')
     );
+
 
   #endif
 

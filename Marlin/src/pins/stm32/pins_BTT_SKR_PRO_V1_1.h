@@ -36,7 +36,8 @@
 //
 // Servos
 //
-#define SERVO0_PIN         PA1
+#define SERVO0_PIN         PF9
+//#define SERVO1_PIN         PF9
 
 
 //
@@ -60,9 +61,9 @@
 // Steppers
 //
 #define X_STEP_PIN         PE9
-//#define X_DIR_PIN          PF1
+#define X_DIR_PIN          PF1
 //Dans  Change back to oabove - solution for damaged pin PG9,PG11 also screwed.. changing to PG14
-#define X_DIR_PIN          PC1
+//#define X_DIR_PIN          PC1
 //EOF Dans
 #define X_ENABLE_PIN       PF2
 #ifndef X_CS_PIN
