@@ -1182,6 +1182,10 @@ void setup() {
   #if ENABLED(MAX7219_DEBUG)
     SETUP_RUN(max7219.init());
   #endif
+  
+  marlin_state = MF_RUNNING;
+
+  SETUP_LOG("setup() completed.");
 
   //Dans
   //enable motor

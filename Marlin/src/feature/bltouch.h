@@ -26,14 +26,14 @@
 // BLTouch commands are sent as servo angles
 typedef unsigned char BLTCommand;
 
-#define BLTOUCH_DEPLOY          10
-#define BLTOUCH_SW_MODE         60
-#define BLTOUCH_STOW            90
-#define BLTOUCH_SELFTEST       120
-#define BLTOUCH_MODE_STORE     130
-#define BLTOUCH_5V_MODE        140
-#define BLTOUCH_OD_MODE        150
-#define BLTOUCH_RESET          160
+#define BLTOUCH_DEPLOY          100
+#define BLTOUCH_SW_MODE         100
+#define BLTOUCH_STOW            100
+#define BLTOUCH_SELFTEST       100
+#define BLTOUCH_MODE_STORE     100
+#define BLTOUCH_5V_MODE        100
+#define BLTOUCH_OD_MODE        100
+#define BLTOUCH_RESET          100
 
 /**
  * The following commands require different minimum delays.
@@ -94,8 +94,15 @@ public:
   static bool triggered();
 
 private:
+//Dans Turn Off BL Touch Error Check
+#ifndef IGNORE_TOUCH_ERROR
   FORCE_INLINE static bool _deploy_query_alarm() { return command(BLTOUCH_DEPLOY, BLTOUCH_DEPLOY_DELAY); }
   FORCE_INLINE static bool _stow_query_alarm()   { return command(BLTOUCH_STOW, BLTOUCH_STOW_DELAY); }
+#else IGNORE_TOUCH_ERROR
+  FORCE_INLINE static bool _deploy_query_alarm() { }
+  FORCE_INLINE static bool _stow_query_alarm()   { }
+#endif
+//EOF DANS
 
   static void clear();
   static bool command(const BLTCommand cmd, const millis_t &ms);
