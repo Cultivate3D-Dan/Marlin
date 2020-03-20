@@ -2811,8 +2811,8 @@
  *
  * Execute certain G-code commands immediately after power-on.
  */
-//#define STARTUP_COMMANDS "M17 Z"
-
+//Dans Set servo poistion to neutral on boot (probe position)
+#define STARTUP_COMMANDS "M280 P0 S100"
 /**
  * G-code Macros
  *

@@ -1117,6 +1117,22 @@ void setup() {
   #if ENABLED(PRUSA_MMU2)
     mmu2.init();
   #endif
+  
+  marlin_state = MF_RUNNING;
+
+  SETUP_LOG("setup() completed.");
+
+  //Dans
+  //enable motor
+  pinMode(45, OUTPUT);
+  digitalWrite(45, LOW);
+  
+  //release lock on Pin 46 (PC1) M43 to show pins "M42 P## S255" to test (DO NOT USE STM32 DATA SHEET PIN NUMBERS - FIND PIN NUMBERS USING M43 COMMAND) 
+pinMode(46, OUTPUT);
+extDigitalWrite(46, 0);
+analogWrite(46, 0);
+
+
 }
 
 /**
