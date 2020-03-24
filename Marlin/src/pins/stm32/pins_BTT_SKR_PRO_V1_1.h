@@ -37,7 +37,7 @@
 // Servos
 //
 #define SERVO0_PIN         PF9
-//#define SERVO1_PIN         PF9
+#define SERVO1_PIN         PF9
 
 
 //

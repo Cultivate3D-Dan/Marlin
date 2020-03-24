@@ -126,7 +126,7 @@
     void move_nozzle_servo(const uint8_t angle_index) {
       planner.synchronize();
       MOVE_SERVO(SWITCHING_NOZZLE_SERVO_NR, servo_angles[SWITCHING_NOZZLE_SERVO_NR][angle_index]);
-      safe_delay(500);
+      safe_delay(50);
     }
 
   #endif

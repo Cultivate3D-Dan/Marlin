@@ -450,6 +450,8 @@ void _lcd_do_nothing() {}
 void _lcd_hard_stop() {
   const screenFunc_t old_screen = ui.currentScreen;
   ui.currentScreen = _lcd_do_nothing;
+  
+ // Dans - removed as makes Z motor disable on edit mesh.  
   planner.quick_stop();
   ui.currentScreen = old_screen;
   set_current_from_steppers_for_axis(ALL_AXES);
@@ -506,8 +508,9 @@ void _lcd_ubl_output_map_lcd() {
   if (ui.should_draw()) {
     ui.ubl_plot(x_plot, y_plot);
 
-    if (planner.movesplanned()) // If the nozzle is already moving, cancel the move.
-      _lcd_hard_stop();
+//Dans Commenting below fixes issue with Z Motor disabling 
+   // if (planner.movesplanned()) _lcd_hard_stop(); // If the nozzle is already moving, cancel the move.
+    //  
 
     ubl_map_move_to_xy();       // Move to new location
   }

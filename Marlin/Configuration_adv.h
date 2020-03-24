@@ -2824,8 +2824,11 @@
  *
  * Execute certain G-code commands immediately after power-on.
  */
-//Dans Set servo poistion to neutral on boot (probe position)
-#define STARTUP_COMMANDS "M280 P0 S100"
+//Dans Prevent servo signal from being duplicated and Set servo poistion to neutral on boot (probe position)
+#define STARTUP_COMMANDS "M280 P0 S100\nG4 P1000\nM280 P0 S-1\nM280 P1 S-1"
+#define TWEAK_SERVO "G4 P1000\nM280 P0 S-1"
+#define TWEAK_SERVO2 "G4 P1000\nM280 P1 S-1"
+#define TWEAK_SERVO_REF "M280 P1 S112\nM280 P0 S112"
 /**
  * G-code Macros
  *

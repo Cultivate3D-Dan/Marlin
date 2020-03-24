@@ -48,7 +48,7 @@
  *   Tc   Load to nozzle after filament was prepared by Tc and nozzle is already heated.
  */
 void GcodeSuite::T(const uint8_t tool_index) {
-
+queue.inject_P(PSTR(TWEAK_SERVO2));
   if (DEBUGGING(LEVELING)) {
     DEBUG_ECHOLNPAIR(">>> T(", tool_index, ")");
     DEBUG_POS("BEFORE", current_position);

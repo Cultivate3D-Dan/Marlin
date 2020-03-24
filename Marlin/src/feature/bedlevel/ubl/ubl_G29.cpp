@@ -32,6 +32,7 @@
   #include "../../../module/configuration_store.h"
   #include "../../../lcd/ultralcd.h"
   #include "../../../module/stepper.h"
+  #include "../../../module/servo.h"
   #include "../../../module/planner.h"
   #include "../../../module/motion.h"
   #include "../../../module/probe.h"
@@ -983,7 +984,7 @@
           return;
         }
       #endif
-
+//SERIAL_ECHOLNPGM("THIS IS A TEST");
       mesh_index_pair location;
 
       if (!position_is_reachable(pos)) {
@@ -997,9 +998,11 @@
       #if HAS_LCD_MENU
         ui.capture();                                         // Take over control of the LCD encoder
       #endif
+      SERIAL_ECHOLNPGM("THIS IS A TEST2");
       do_blocking_move_to_xy_z(pos, Z_CLEARANCE_BETWEEN_PROBES); // Move to the given XY with probe clearance
 
       #if ENABLED(UBL_MESH_EDIT_MOVES_Z)
+       SERIAL_ECHOLNPGM("THIS IS A TEST3");
         do_blocking_move_to_z(h_offset);                    // Move Z to the given 'H' offset
       #endif
 
@@ -1019,11 +1022,13 @@
         };
 
         if (!position_is_reachable(raw)) break;             // SHOULD NOT OCCUR (find_closest_mesh_point_of_type only returns reachable)
-
+SERIAL_ECHOLNPGM("THIS IS A TEST4");
+//       MOVE_SERVO(1,112);
+//Dans Suspect line which disables servo
         do_blocking_move_to(raw);                           // Move the nozzle to the edit point with probe clearance
 
         #if ENABLED(UBL_MESH_EDIT_MOVES_Z)
-          do_blocking_move_to_z(h_offset);                  // Move Z to the given 'H' offset before editing
+         do_blocking_move_to_z(h_offset);                  // Move Z to the given 'H' offset before editing
         #endif
 
         KEEPALIVE_STATE(PAUSED_FOR_USER);
@@ -1037,10 +1042,14 @@
         new_z = FLOOR(new_z * 1000) * 0.001f;               // Chop off digits after the 1000ths place
 
         lcd_mesh_edit_setup(new_z);
-
+SERIAL_ECHOLNPGM("THIS IS A TEST5");
+ 
         do {
           new_z = lcd_mesh_edit();
+ //        
+          
           #if ENABLED(UBL_MESH_EDIT_MOVES_Z)
+            
             do_blocking_move_to_z(h_offset + new_z);        // Move the nozzle as the point is edited
           #endif
           idle();

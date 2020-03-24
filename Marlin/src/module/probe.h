@@ -29,6 +29,7 @@
 
 #include "motion.h"
 
+
 #if HAS_BED_PROBE
   enum ProbePtRaise : uint8_t {
     PROBE_PT_NONE,      // No raise or stow after run_z_probe
@@ -44,7 +45,7 @@ public:
   #if HAS_BED_PROBE
 
     static xyz_pos_t offset;
-
+    
     static bool set_deployed(const bool deploy);
 
 
@@ -118,7 +119,7 @@ public:
     static constexpr xy_pos_t offset_xy = xy_pos_t({ 0, 0 });   // See #16767
   #endif
 
-  static inline bool deploy() { return set_deployed(true); }
+  static inline bool deploy() { return set_deployed(true);    }
   static inline bool stow() { return set_deployed(false); }
 
   #if HAS_BED_PROBE || HAS_LEVELING
@@ -201,6 +202,7 @@ public:
 
   #if HAS_Z_SERVO_PROBE
     static void servo_probe_init();
+    
   #endif
 
   #if QUIET_PROBING

@@ -37,7 +37,8 @@
 
 #include "../gcode/gcode.h"
 #include "../lcd/ultralcd.h"
-
+#include "../gcode/queue.h"
+ 
 #include "../MarlinCore.h" // for stop(), disable_e_steppers, wait_for_user
 
 #if HAS_LEVELING
@@ -66,6 +67,7 @@
 
 #if HAS_Z_SERVO_PROBE
   #include "servo.h"
+
 #endif
 
 #if ENABLED(SENSORLESS_PROBING)
@@ -329,7 +331,7 @@ FORCE_INLINE void probe_specific_action(const bool deploy) {
     dock_sled(!deploy);
 
   #elif HAS_Z_SERVO_PROBE
-
+   
     #if DISABLED(BLTOUCH)
       MOVE_SERVO(Z_PROBE_SERVO_NR, servo_angles[Z_PROBE_SERVO_NR][deploy ? 0 : 1]);
     #elif ENABLED(BLTOUCH_HS_MODE)
@@ -550,7 +552,8 @@ bool Probe::probe_down_to_z(const float z, const feedRate_t fr_mm_s) {
  * @return The Z position of the bed at the current XY or NAN on error.
  */
 float Probe::run_z_probe(const bool sanity_check/*=true*/) {
-
+queue.inject_P(PSTR(TWEAK_SERVO));
+queue.inject_P(PSTR(TWEAK_SERVO2));
   if (DEBUGGING(LEVELING)) DEBUG_POS(">>> Probe::run_z_probe", current_position);
 
   // Stop the probe before it goes too low to prevent damage.

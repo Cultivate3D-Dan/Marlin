@@ -25,6 +25,7 @@
  */
 
 #include "motion.h"
+#include "servo.h"
 #include "endstops.h"
 #include "stepper.h"
 #include "planner.h"
@@ -42,6 +43,8 @@
 #if HAS_BED_PROBE
   #include "probe.h"
 #endif
+
+//#include "servo.h"
 
 #if HAS_LEVELING
   #include "../feature/bedlevel/bedlevel.h"
@@ -327,6 +330,7 @@ void set_current_from_steppers_for_axis(const AxisEnum axis) {
  */
 void line_to_current_position(const feedRate_t &fr_mm_s/*=feedrate_mm_s*/) {
   planner.buffer_line(current_position, fr_mm_s, active_extruder);
+ //MOVE_SERVO(0,112);
 }
 
 #if IS_KINEMATIC
@@ -460,7 +464,7 @@ void do_blocking_move_to(const float rx, const float ry, const float rz, const f
 
     current_position.set(rx, ry);
     line_to_current_position(xy_feedrate);
-
+    
     // If Z needs to lower, do it after moving XY
     if (current_position.z > rz) {
       current_position.z = rz;
@@ -504,6 +508,8 @@ void do_blocking_move_to_xy(const xy_pos_t &raw, const feedRate_t &fr_mm_s/*=0.0
 void do_blocking_move_to_xy_z(const xy_pos_t &raw, const float &z, const feedRate_t &fr_mm_s/*=0.0f*/) {
   do_blocking_move_to(raw.x, raw.y, z, fr_mm_s);
 }
+
+
 
 //
 // Prepare to do endstop or probe moves with custom feedrates.

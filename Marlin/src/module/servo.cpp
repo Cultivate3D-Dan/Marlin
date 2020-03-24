@@ -54,5 +54,11 @@ void servo_init() {
     servo[3].detach();
   #endif
 }
+void servo_detach() {
+  
+  
+    servo[0].detach(); // Just set up the pin. We don't have a position yet. Don't move to a random position.
+
+}
 
 #endif // HAS_SERVOS
