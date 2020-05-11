@@ -33,7 +33,9 @@
 #include "../../gcode/queue.h"
 #include "../../module/printcounter.h"
 #include "../../module/stepper.h"
+#include "../../gcode/gcode.h"
 #include "../../sd/cardreader.h"
+
 
 #if HAS_GAMES && DISABLED(LCD_INFO_MENU)
   #include "game/game.h"
@@ -46,6 +48,7 @@
   #include "../../lcd/menu/menu_mmu2.h"
 #endif
 
+void menu_open_top();
 void menu_tune();
 void menu_motion();
 void menu_temperature();
@@ -78,6 +81,19 @@ void menu_configuration();
 #endif
 
 extern const char M21_STR[];
+
+void menu_open_top() {
+ START_MENU();
+
+  //
+  // ^ Main
+  //
+  BACK_ITEM(MSG_MAIN);
+
+ GCODES_ITEM(MSG_OPEN_TOP, PSTR("G1 Y-700\nG1 Z700"));
+ END_MENU();
+ 
+}
 
 void menu_main() {
   START_MENU();
@@ -144,6 +160,8 @@ void menu_main() {
     #if MACHINE_CAN_PAUSE
       if (printingIsPaused()) ACTION_ITEM(MSG_RESUME_PRINT, ui.resume_print);
     #endif
+
+    SUBMENU(MSG_OPEN_TOP,menu_open_top);
 
     SUBMENU(MSG_MOTION, menu_motion);
   }

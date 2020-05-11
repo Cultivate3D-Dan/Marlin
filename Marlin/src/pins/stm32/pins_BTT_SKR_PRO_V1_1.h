@@ -47,7 +47,7 @@
 #define X_MAX_PIN          PE15
 #define Y_MIN_PIN          PE12
 #define Y_MAX_PIN          PG5
-#define Z_MIN_PIN          PG8
+#define Z_MIN_PIN          PG8 //Should be PG8 Changed to PA1 because of dead pullup resistor 
 #define Z_MAX_PIN          PE10
 
 //

@@ -466,7 +466,7 @@
 
 // If you want endstops to stay on (by default) even when not homing
 // enable this option. Override at any time with M120, M121.
-//#define ENDSTOPS_ALWAYS_ON_DEFAULT
+#define ENDSTOPS_ALWAYS_ON_DEFAULT
 
 // @section extras
 
@@ -2829,6 +2829,8 @@
 #define TWEAK_SERVO "G4 P1000\nM280 P0 S-1"
 #define TWEAK_SERVO2 "G4 P1000\nM280 P1 S-1"
 #define TWEAK_SERVO_REF "M280 P1 S112\nM280 P0 S112"
+//Position to move hotend to for top door open must be any number larger than max build height
+#define MOVE_TO_TOP_STRING "G1 Z700\nG28 Y"
 /**
  * G-code Macros
  *

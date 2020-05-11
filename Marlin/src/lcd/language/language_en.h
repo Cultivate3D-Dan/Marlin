@@ -306,6 +306,7 @@ namespace Language_en {
   PROGMEM Language_Str MSG_EN_STEPS                        = _UxGT("*steps/mm");
   PROGMEM Language_Str MSG_TEMPERATURE                     = _UxGT("Temperature");
   PROGMEM Language_Str MSG_MOTION                          = _UxGT("Motion");
+  PROGMEM Language_Str MSG_OPEN_TOP                        = _UxGT("Open Top Door");
   PROGMEM Language_Str MSG_FILAMENT                        = _UxGT("Filament");
   PROGMEM Language_Str MSG_VOLUMETRIC_ENABLED              = _UxGT("E in mm³");
   PROGMEM Language_Str MSG_FILAMENT_DIAM                   = _UxGT("Fil. Dia.");
