@@ -22,6 +22,7 @@
 
 #include "../gcode.h"
 #include "../../module/tool_change.h"
+#include "../../module/servo.h"
 #include "../../gcode/queue.h"
 
 #if ENABLED(DEBUG_LEVELING_FEATURE) || EXTRUDERS > 1
@@ -48,7 +49,9 @@
  *   Tc   Load to nozzle after filament was prepared by Tc and nozzle is already heated.
  */
 void GcodeSuite::T(const uint8_t tool_index) {
-queue.inject_P(PSTR(TWEAK_SERVO2));
+//queue.inject_P(PSTR(TWEAK_SERVO2));
+servo[1].detach();
+servo[0].detach();
   if (DEBUGGING(LEVELING)) {
     DEBUG_ECHOLNPAIR(">>> T(", tool_index, ")");
     DEBUG_POS("BEFORE", current_position);
@@ -74,7 +77,8 @@ queue.inject_P(PSTR(TWEAK_SERVO2));
       tool_index,
       (tool_index == active_extruder) || parser.boolval('S')
     );
-
+    
+  
 
   #endif
 

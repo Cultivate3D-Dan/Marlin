@@ -42,7 +42,11 @@
 // Servos
 //
 #if ENABLED(TP)
-  #define SERVO0_PIN                        PB11
+ 
+  #define SERVO0_PIN         PB11
+  #define SERVO1_PIN         PB11
+
+
 #endif
 
 #define PS_ON_PIN                           PH6
@@ -50,12 +54,12 @@
 //
 // Limit Switches
 //
-#define X_MIN_PIN                           PF2
-#define X_MAX_PIN                           PG14
+#define X_MIN_PIN                           PD3
+#define X_MAX_PIN                           PF2
 #define Y_MIN_PIN                           PC13
 #define Y_MAX_PIN                           PG9
 #define Z_MIN_PIN                           PE0
-#define Z_MAX_PIN                           PD3
+#define Z_MAX_PIN                           PG14
 
 //
 // Pins on the extender
@@ -378,9 +382,12 @@
 
   // Alter timing for graphical display
   #if HAS_GRAPHICAL_LCD
-    #define BOARD_ST7920_DELAY_1 DELAY_NS(96)
-    #define BOARD_ST7920_DELAY_2 DELAY_NS(48)
-    #define BOARD_ST7920_DELAY_3 DELAY_NS(600)
+    //#define BOARD_ST7920_DELAY_1 DELAY_NS(96)
+    //#define BOARD_ST7920_DELAY_2 DELAY_NS(48)
+    //#define BOARD_ST7920_DELAY_3 DELAY_NS(600)
+    #define ST7920_DELAY_1 DELAY_NS(0)
+#define ST7920_DELAY_2 DELAY_NS(400)
+#define ST7920_DELAY_3 DELAY_NS(0)
   #endif
 
   //#define DOGLCD_CS                       PB12

@@ -26,6 +26,7 @@
 
 #include "../../module/stepper.h"
 #include "../../module/endstops.h"
+#include "../../module/servo.h"
 
 #if HOTENDS > 1
   #include "../../module/tool_change.h"
@@ -289,7 +290,10 @@ void GcodeSuite::G28() {
     #if DISABLED(DELTA) || ENABLED(DELTA_HOME_TO_SAFE_ZONE)
       const uint8_t old_tool_index = active_extruder;
     #endif
-    tool_change(0, true);
+    tool_change(1, true);  //Dans Change to Tool 1
+    servo[0].detach();
+    servo[1].detach();
+
   #endif
 
   #if HAS_DUPLICATION_MODE
@@ -476,6 +480,8 @@ void GcodeSuite::G28() {
   // Restore the active tool after homing
   #if HOTENDS > 1 && (DISABLED(DELTA) || ENABLED(DELTA_HOME_TO_SAFE_ZONE))
     tool_change(old_tool_index, NONE(PARKING_EXTRUDER, DUAL_X_CARRIAGE));   // Do move if one of these
+    servo[0].detach();
+    servo[1].detach();
   #endif
 
   #if HAS_HOMING_CURRENT

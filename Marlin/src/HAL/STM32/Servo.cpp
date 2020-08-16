@@ -48,7 +48,7 @@ int8_t libServo::attach(const int pin, const int min, const int max) {
   return super::attach(servo_pin, min, max);
 }
 
-void libServo::move(const int value) {
+void libServo::move(const float value) {
   if (attach(0) >= 0) {
     write(value);
     safe_delay(delay);

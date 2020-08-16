@@ -32,7 +32,7 @@ class libServo : public Servo {
     libServo();
     int8_t attach(const int pin);
     int8_t attach(const int pin, const int min, const int max);
-    void move(const int value);
+    void move(const float value);
   private:
     typedef Servo super;
 

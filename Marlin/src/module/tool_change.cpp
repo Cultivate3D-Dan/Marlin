@@ -127,6 +127,10 @@
       planner.synchronize();
       MOVE_SERVO(SWITCHING_NOZZLE_SERVO_NR, servo_angles[SWITCHING_NOZZLE_SERVO_NR][angle_index]);
       safe_delay(50);
+      MOVE_SERVO(SWITCHING_NOZZLE_SERVO_NR, servo_angles[SWITCHING_NOZZLE_SERVO_NR][angle_index]);//Dans Important Repeat to ensure position
+       safe_delay(100);
+      MOVE_SERVO(SWITCHING_NOZZLE_SERVO_NR, servo_angles[SWITCHING_NOZZLE_SERVO_NR][angle_index]); //Dans Important Repeat to ensure position
+      safe_delay(50);
     }
 
   #endif
@@ -871,7 +875,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
       TEMPORARY_BED_LEVELING_STATE(false);
     #endif
 
-    if (new_tool != old_tool) {
+    if (new_tool != old_tool) {  
 
       #if SWITCHING_NOZZLE_TWO_SERVOS
         raise_nozzle(old_tool);
@@ -946,7 +950,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
           if (newz > maxz) return;
 
           current_position.z = _MIN(newz + toolchange_settings.z_raise, maxz);
-          fast_line_to_current(Z_AXIS);
+          fast_line_to_current(Z_AXIS); 
         }
         move_nozzle_servo(new_tool);
       #endif
@@ -1022,10 +1026,12 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
             // Just move back down
             if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Move back Z only");
             do_blocking_move_to_z(destination.z, planner.settings.max_feedrate_mm_s[Z_AXIS]);
+        
           #else
             // Move back to the original (or adjusted) position
             if (DEBUGGING(LEVELING)) DEBUG_POS("Move back", destination);
             do_blocking_move_to(destination);
+
           #endif
         }
         else if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("Move back skipped");
@@ -1052,6 +1058,7 @@ void tool_change(const uint8_t new_tool, bool no_move/*=false*/) {
     } // (new_tool != old_tool)
 
     planner.synchronize();
+    
 
     #if ENABLED(EXT_SOLENOID) && DISABLED(PARKING_EXTRUDER)
       disable_all_solenoids();
