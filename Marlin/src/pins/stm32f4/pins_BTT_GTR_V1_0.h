@@ -37,8 +37,8 @@
 //#define FLASH_EEPROM_EMULATION                  // Use Flash-based EEPROM emulation
 
 
-#define FIL_RUNOUT_PIN PH6
-#define FIL_RUNOUT2_PIN PD3
+#define FIL_RUNOUT_PIN PD3
+#define FIL_RUNOUT2_PIN PI11
 
 
 
