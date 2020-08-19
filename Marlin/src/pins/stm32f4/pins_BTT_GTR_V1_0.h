@@ -36,6 +36,12 @@
 //#define SRAM_EEPROM_EMULATION                   // Use BackSRAM-based EEPROM emulation
 //#define FLASH_EEPROM_EMULATION                  // Use Flash-based EEPROM emulation
 
+#ifndef FIL_RUNOUT_PIN
+#define FIL_RUNOUT_PIN PH6
+#define FIL_RUNOUT1_PIN PD3
+#endif
+
+
 #define TP                                        // Enable to define servo and probe pins
 
 //
