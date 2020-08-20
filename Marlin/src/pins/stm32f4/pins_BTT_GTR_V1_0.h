@@ -294,7 +294,24 @@
 //
 // By default the onboard SD (SPI1) is enabled
 //
-#define CUSTOM_SPI_PINS
+#ifndef SDCARD_CONNECTION
+  #define SDCARD_CONNECTION                  LCD
+#endif
+
+#if SDCARD_CONNECTION == ONBOARD && !HAS_SPI_LCD
+  #define SOFTWARE_SPI                            // Use soft SPI for onboard SD
+  #define SDSS                              PA4
+  #define SCK_PIN                           PA5
+  #define MISO_PIN                          PA6
+  #define MOSI_PIN                          PB5
+#else
+  #define SDSS                              PB12
+#endif
+
+
+
+
+//#define CUSTOM_SPI_PINS
 #if DISABLED(CUSTOM_SPI_PINS)
   #define SDSS                              PB12
 #endif
