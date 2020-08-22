@@ -318,14 +318,14 @@
 
 // HAL SPI1 pins group
 #if ENABLED(CUSTOM_SPI_PINS)
-  #define SDSS                              PA4
-  #define SD_DETECT_PIN                     PC4
-  #define LCD_SDSS                          PA4
+  //#define SDSS                              PB12
+  #define SD_DETECT_PIN                     PB10
+  #define LCD_SDSS                          PB12
 
-  #define SCK_PIN                           PA5
-  #define MISO_PIN                          PA6
-  #define MOSI_PIN                          PA7
-  #define SS_PIN                            PA4   // Chip select for SD card used by Marlin
+  //#define SCK_PIN                           PA5
+  //#define MISO_PIN                          PA6
+  //#define MOSI_PIN                          PA7
+  //#define SS_PIN                            PA4   // Chip select for SD card used by Marlin
 #endif
 
 /**
@@ -370,6 +370,7 @@
     #if DISABLED(CUSTOM_SPI_PINS)
       #define SD_DETECT_PIN                 PB10
       #define LCD_SDSS                      PB12
+       #define SDSS                              PB12
     #endif
 
     #define LCD_PINS_ENABLE                 PC10
