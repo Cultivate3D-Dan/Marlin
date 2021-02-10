@@ -69,7 +69,7 @@ int8_t libServo::attach(const int pin, const int min, const int max) {
   return result;
 }
 
-void libServo::move(const float value) {
+void libServo::move(const int value) {
   if (attach(0) >= 0) {
     stm32_servo.write(value);
     safe_delay(delay);
