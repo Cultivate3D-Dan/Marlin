@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 #pragma once
@@ -46,7 +46,6 @@
  *           Version 2 Copyright (c) 2009 Michael Margolis.  All right reserved.
  *
  * The only modification was to update/delete macros to match the LPC176x.
- *
  */
 
 #include <Servo.h>
@@ -66,9 +65,7 @@ class libServo: public Servo {
    
       write(value);
       safe_delay(servo_delay[servoIndex]); // delay to allow servo to reach position
-      #if ENABLED(DEACTIVATE_SERVOS_AFTER_MOVE)
-        detach();
-      #endif
+      TERN_(DEACTIVATE_SERVOS_AFTER_MOVE, detach());
     }
 
   }
