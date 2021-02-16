@@ -188,7 +188,7 @@
 #if ENABLED(SWITCHING_NOZZLE)
   #define SWITCHING_NOZZLE_SERVO_NR 0
   //#define SWITCHING_NOZZLE_E1_SERVO_NR 1          // If two servos are used, the index of the second
- #define SWITCHING_NOZZLE_SERVO_ANGLES { 107, 74 }   // Angles for E0, E1
+ #define SWITCHING_NOZZLE_SERVO_ANGLES { 105, 71 }   // Angles for E0, E1
   //#define HOTEND_OFFSET_Z { 0.0, 0.04 }
   #endif
 
@@ -892,7 +892,7 @@
  * Z Servo Probe, such as an endstop switch on a rotating arm.
  */
 #define Z_PROBE_SERVO_NR 1       // Defaults to SERVO 0 connector.
-#define Z_SERVO_ANGLES { 91, 91 } // Z Servo Deploy and Stow angles
+#define Z_SERVO_ANGLES { 89, 89 } // Z Servo Deploy and Stow angles
 
 /**
  * The BLTouch probe uses a Hall effect sensor and emulates a servo.
@@ -1223,13 +1223,13 @@
   // After a runout is detected, continue printing this length of filament
   // before executing the runout script. Useful for a sensor at the end of
   // a feed tube. Requires 4 bytes SRAM per sensor, plus 4 bytes overhead.
-  //#define FILAMENT_RUNOUT_DISTANCE_MM 25
+  #define FILAMENT_RUNOUT_DISTANCE_MM 8
 
   #ifdef FILAMENT_RUNOUT_DISTANCE_MM
     // Enable this option to use an encoder disc that toggles the runout pin
     // as the filament moves. (Be sure to set FILAMENT_RUNOUT_DISTANCE_MM
     // large enough to avoid false positives.)
-    //#define FILAMENT_MOTION_SENSOR
+    #define FILAMENT_MOTION_SENSOR
   #endif
 #endif
 
